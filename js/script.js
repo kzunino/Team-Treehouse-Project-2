@@ -44,11 +44,11 @@ const showPage = (studentList, page) => {
     if (i >= firstListItem && i <= lastListItem){   //conditional statement to iterate through list segments (note to self don't use studentList[i]) and hide or display list items
       studentList[i].style.display = '';
     }else{
-      studentList[i].style.display = 'none';
+      studentList[i].style.display = 'none'; //hides list items
     }
     }
 };
-showPage(studentList, 1);
+showPage(studentList, 1); //when calling function students are displayed in blocks of ten per page. Last page shows 4 students.
 /*
 Loop over items in the list parameter
 -- If the index of a list item is >= the index of the first
@@ -100,4 +100,3 @@ newLi.appendChild(aTag);
 };
 
 appendPageLinks(studentList);
-// Remember to delete the comments that came with this file, and replace them with your own code comments.
