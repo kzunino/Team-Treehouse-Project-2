@@ -48,7 +48,10 @@ const showPage = (studentList, page) => {
     }
     }
 };
-showPage(studentList, 1); //when calling function students are displayed in blocks of ten per page. Last page shows 4 students.
+
+//showPage(studentList, 1); //when calling function students are displayed in blocks of ten per page. Last page shows 4 students.
+
+
 /*
 Loop over items in the list parameter
 -- If the index of a list item is >= the index of the first
@@ -72,8 +75,8 @@ const appendPageLinks = (StudentList) => {
 total number of list items by the max number of items per page
 2. Create a div, give it the “pagination” class, and append it to the .page div
 3. Add a ul to the “pagination” div to store the pagination links
-
 4. for every page, add li and a tags with the page number text
+
 5. Add an event listener to each a tag. When they are clicked
 call the showPage function to display the appropriate page
 6. Loop over pagination links to remove active class from all links
@@ -85,17 +88,18 @@ pageDiv.appendChild(newDiv);  //appends paginationDiv to div.page
 newDiv.className += 'pagination';  // assigns class name pagination to div
 const newUl = document.createElement('ul'); // creates ul for page links
 newDiv.appendChild(newUl); // appends the page links to paginationDiv
-const newLi = document.createElement('li');  //creates a list item in pageLinks
-newUl.appendChild(newLi);  //appends li to pagelinks
-const aTag = document.createElement('a');
-newLi.appendChild(aTag);
-//aTag.className += 'active';
     for (var i = 1; i <= pages; i+= 1){
-    newUl.appendChild(newLi);  //appends li to pagelinks
-    newLi.appendChild(aTag);
-    aTag.setAttribute('href','#'); //sets attribute for href link
-    aTag.textContent = i;
-  }
+      const newLi = document.createElement('li');  //creates a list item in pageLinks
+      newUl.appendChild(newLi);  //appends li to pagelinks
+      const aTag = document.createElement('a');
+      newLi.appendChild(aTag);
+      aTag.setAttribute('href','#'); //sets attribute for href link
+      aTag.textContent = i;   //changes page numbers per each itteration
+      aTag.addEventListener('click', (e) => {
+        showPage(studentList, aTag.textContent); //calls function with aTag's text content, which is a corresponding page number;
+        }
+      });
+    }
 };
 
 appendPageLinks(studentList);
