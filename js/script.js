@@ -91,7 +91,6 @@ const aTag = document.createElement('a');
 newLi.appendChild(aTag);
 //aTag.className += 'active';
     for (var i = 1; i <= pages; i+= 1){
-    newLi;
     newUl.appendChild(newLi);  //appends li to pagelinks
     newLi.appendChild(aTag);
     aTag.setAttribute('href','#'); //sets attribute for href link
