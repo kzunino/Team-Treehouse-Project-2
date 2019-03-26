@@ -49,9 +49,6 @@ const showPage = (studentList, page) => {
     }
 };
 
-//showPage(studentList, 1); //when calling function students are displayed in blocks of ten per page. Last page shows 4 students.
-
-
 /*
 Loop over items in the list parameter
 -- If the index of a list item is >= the index of the first
@@ -87,7 +84,10 @@ const newDiv = document.createElement('div');  //creates new div
 pageDiv.appendChild(newDiv);  //appends paginationDiv to div.page
 newDiv.className += 'pagination';  // assigns class name pagination to div
 const newUl = document.createElement('ul'); // creates ul for page links
+newUl.className = 'pages';
 newDiv.appendChild(newUl); // appends the page links to paginationDiv
+const selectNewUl = document.querySelector('.pages')
+
     for (var i = 1; i <= pages; i+= 1){
       const newLi = document.createElement('li');  //creates a list item in pageLinks
       newUl.appendChild(newLi);  //appends li to pagelinks
@@ -95,11 +95,23 @@ newDiv.appendChild(newUl); // appends the page links to paginationDiv
       newLi.appendChild(aTag);
       aTag.setAttribute('href','#'); //sets attribute for href link
       aTag.textContent = i;   //changes page numbers per each itteration
-      aTag.addEventListener('click', (e) => {
-        showPage(studentList, aTag.textContent); //calls function with aTag's text content, which is a corresponding page number;
-        }
-      });
     }
+    selectNewUl.addEventListener('click', (e) => { //uses bubbling to target ancestor ul of a tags.
+      if (event.target.tagName === 'A'){
+        showPage(studentList, event.target.textContent); //calls function with aTag's text content, which is a corresponding page number;
+      }
+      });
+    
 };
 
 appendPageLinks(studentList);
+
+
+
+// aTag.addEventListener('click', (e) => {
+//   showPage(studentList, aTag.textContent); //calls function with aTag's text content, which is a corresponding page number;
+//   const aTagList = document.querySelectorAll('a');
+//     for (var i = 0; i <= aTagList.length; i++){
+//       aTagList[i].classList.remove ('active');
+//   }
+//   event.target.className = 'active';
