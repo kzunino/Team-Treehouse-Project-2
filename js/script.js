@@ -90,13 +90,12 @@ newUl.appendChild(newLi);  //appends li to pagelinks
 const aTag = document.createElement('a');
 newLi.appendChild(aTag);
 //aTag.className += 'active';
-const firstPage = 1;
-    if (firstPage <= pages){
+    for (var i = 1; i <= pages; i+= 1){
     newLi;
     newUl.appendChild(newLi);  //appends li to pagelinks
     newLi.appendChild(aTag);
     aTag.setAttribute('href','#'); //sets attribute for href link
-    aTag.textContent = firstPage;
+    aTag.textContent = i;
   }
 };
 
