@@ -8,6 +8,49 @@ const ul = document.querySelector('.student-list'); //stores ul with student-lis
 const studentList = ul.children; //stores student list items as array
 const pages = Math.ceil(studentList.length/10); // divides index by page numbers and rounds up to fit values on the last page.
 
+
+const pageHeader = document.querySelector('.page-header'); //selects page header div *Note: leave off whitespace and cf from class tag.
+const searchDiv = document.createElement('div');
+searchDiv.className = 'search-student';
+pageHeader.appendChild(searchDiv);
+const input = document.createElement('input');
+input.placeholder = 'Search for students';
+searchDiv.appendChild(input);
+const button = document.createElement('button');
+button.textContent = 'Search';
+searchDiv.appendChild(button);
+
+
+input.addEventListener('submit', (e) =>{
+  e.preventDefault ();             //stops page from refreshing
+  const text = input.value;        //stores text value from input field
+  input.value = '';                //clears the text from field
+  if (text === ' '){
+      for (var i = 0; i < studentList.length; i ++)
+      studentlist[i].style.display = 'none';
+
+  }
+});
+
+button.addEventListener('click', (e) =>{
+  if (e.target === 'BUTTON') {
+
+  }
+
+});
+
+
+
+// <li class="student-item cf">
+//     <div class="student-details">
+//         <img class="avatar" src="https://randomuser.me/api/portraits/thumb/women/67.jpg">
+//         <h3>iboya vat</h3>
+//         <span class="email">iboya.vat@example.com</span>
+//     </div>
+//     <div class="joined-details">
+//            <span class="date">Joined 07/15/15</span>
+//    </div>
+
 const showPage = (studentList, page) => {
   let lastListItem = (page * 10) - 1;         //stores the last item's index value
   let firstListItem = (lastListItem - 9);     //stores the first item's index value
