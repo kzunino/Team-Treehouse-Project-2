@@ -13,22 +13,23 @@ const pageHeader = document.querySelector('.page-header'); //selects page header
 const searchDiv = document.createElement('div');
 searchDiv.className = 'search-student';
 pageHeader.appendChild(searchDiv);
-const input = document.createElement('input');
-input.placeholder = 'Search for students';
-searchDiv.appendChild(input);
+const searchInput = document.createElement('input');
+searchInput.placeholder = 'Search for students';
+searchDiv.appendChild(searchInput);
 const button = document.createElement('button');
 button.textContent = 'Search';
 searchDiv.appendChild(button);
 
 
-input.addEventListener('submit', (e) =>{
+searchInput.addEventListener('submit', (e) => {
   e.preventDefault ();             //stops page from refreshing
-  const text = input.value;        //stores text value from input field
-  input.value = '';                //clears the text from field
+  const text = searchInput.value;        //stores text value from input field
+  searchInput.value = '';                //clears the text from field
   if (text === ' '){
-      for (var i = 0; i < studentList.length; i ++)
+      for (var i = 0; i <= studentList.length; i ++)
       studentlist[i].style.display = 'none';
-
+    }else{
+      console.log(text);
   }
 });
 
@@ -39,7 +40,7 @@ button.addEventListener('click', (e) =>{
 
 });
 
-
+//append studentList[i] that matches search.
 
 // <li class="student-item cf">
 //     <div class="student-details">
