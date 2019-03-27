@@ -100,10 +100,10 @@ const aTagList = document.querySelectorAll('a');
     selectNewUl.addEventListener('click', (e) => { //uses bubbling to target ancestor ul of a tags.
       if (event.target.tagName === 'A'){
         showPage(studentList, event.target.textContent); //calls function with aTag's text content, which is a corresponding page number;
-        for (var i = 0; i <= aTagList.length; i++){
+        for (var i = 0; i <= aTagList.length; i += 1){
           aTagList[i].classList.remove('active');
         }
-      event.target.className += 'active';
+      event.target.className = 'active';
       }
       });
 };
