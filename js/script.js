@@ -87,6 +87,7 @@ const newUl = document.createElement('ul'); // creates ul for page links
 newUl.className = 'pages';
 newDiv.appendChild(newUl); // appends the page links to paginationDiv
 const selectNewUl = document.querySelector('.pages')
+const aTagList = document.querySelectorAll('a');
 
     for (var i = 1; i <= pages; i+= 1){
       const newLi = document.createElement('li');  //creates a list item in pageLinks
@@ -100,10 +101,9 @@ const selectNewUl = document.querySelector('.pages')
       if (event.target.tagName === 'A'){
         showPage(studentList, event.target.textContent); //calls function with aTag's text content, which is a corresponding page number;
         for (var i = 0; i <= aTagList.length; i++){
-          const aTagList = document.querySelectorAll('a');
           aTagList[i].classList.remove('active');
         }
-        event.target.className = 'active';
+      event.target.className += 'active';
       }
       });
 };
