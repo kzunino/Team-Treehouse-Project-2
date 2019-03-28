@@ -30,7 +30,6 @@ searchInput.addEventListener('keyup', (e) => {
         let studentName = studentList[i].getElementsByTagName('h3')[0];             // should target each list item and their h3 tag with name
         if (studentName.textContent.toUpperCase().indexOf(searchText) > -1){     // tests input against index of names
             studentList[i].style.display = '';
-            showPage(studentList[i])
         }else{
             studentList[i].style.display = 'none'
 }
@@ -39,11 +38,17 @@ searchInput.addEventListener('keyup', (e) => {
 
 button.addEventListener('click', (e) =>{
   e.preventDefault();                                         //stops page from refreshing
-  if (e.target === 'BUTTON') {
-    // if (searchText.length === 0 || searchText.trim()){     //checks to make sure search has content
-    //     studentlist[i].style.display = 'none';
+  if (e.target.tagName === 'BUTTON') {
+      const searchText = searchInput.value.toUpperCase();
+      for (var i = 0; i <= studentList.length; i ++){                      // loop through student list
+          let studentName = studentList[i].getElementsByTagName('h3')[0];             // should target each list item and their h3 tag with name
+          if (studentName.textContent.toUpperCase().indexOf(searchText) > -1){     // tests input against index of names
+              studentList[i].style.display = '';
+          }else{
+              studentList[i].style.display = 'none'
+}
   }
-
+}
 });
 
 //append studentList[i] that matches search.
