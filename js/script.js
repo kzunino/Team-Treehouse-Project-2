@@ -15,27 +15,33 @@ searchDiv.className = 'search-student';
 pageHeader.appendChild(searchDiv);
 const searchInput = document.createElement('input');
 searchInput.placeholder = 'Search for students';
+searchInput.type = 'text';
 searchDiv.appendChild(searchInput);
 const button = document.createElement('button');
 button.textContent = 'Search';
+button.type = 'search';
 searchDiv.appendChild(button);
 
 
-searchInput.addEventListener('submit', (e) => {
-  e.preventDefault ();             //stops page from refreshing
-  const text = searchInput.value;        //stores text value from input field
-  searchInput.value = '';                //clears the text from field
-  if (text === ' '){
-      for (var i = 0; i <= studentList.length; i ++)
-      studentlist[i].style.display = 'none';
-    }else{
-      console.log(text);
-  }
+searchInput.addEventListener('keyup', (e) => {
+  const studentLi = ul.querySelectorAll('li.student-item');
+  const searchText = searchInput.value.toUpperCase();        //stores text value from input field
+    for (var i = 0; i <= studentLi.length; i ++){             // loop through student list
+        let studentName = studentLi[i].getElementsByTagName('h3')[0];
+        if (studentName.textContent.toUpperCase().indexOf(studentName) > -1){     //checks to make sure search has content
+            studentli[i].style.display = '';
+        }else{
+            studentLi[i].style.display = 'none'
+
+}
+}
 });
 
 button.addEventListener('click', (e) =>{
+  e.preventDefault();                                         //stops page from refreshing
   if (e.target === 'BUTTON') {
-
+    // if (searchText.length === 0 || searchText.trim()){     //checks to make sure search has content
+    //     studentlist[i].style.display = 'none';
   }
 
 });
@@ -83,7 +89,7 @@ const appendPageLinks = (StudentList) => {
         aTag.setAttribute('href','#'); //sets attribute for href link
         aTag.textContent = i;   //changes page numbers per each itteration
       }
-      selectNewUl.addEventListener('click', (e) => { //uses bubbling to target ancestor ul of a tags.
+      selectNewUl.addEventListener('click', (e) => {    //uses bubbling to target ancestor ul of a tags.
         const aTagList = document.querySelectorAll('a');
         if (event.target.tagName === 'A'){
           showPage(studentList, event.target.textContent); //calls function with aTag's text content, which is a corresponding page number;
