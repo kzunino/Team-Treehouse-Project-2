@@ -25,11 +25,11 @@ searchDiv.appendChild(button);
 
 searchInput.addEventListener('keyup', (e) => {
   const studentLi = ul.querySelectorAll('li.student-item');
-  const searchText = searchInput.value.toUpperCase();        //stores text value from input field
-    for (var i = 0; i <= studentLi.length; i ++){             // loop through student list
-        let studentName = studentLi[i].getElementsByTagName('h3')[0];
-        if (studentName.textContent.toUpperCase().indexOf(studentName) > -1){     //checks to make sure search has content
-            studentli[i].style.display = '';
+  const searchText = searchInput.value.toUpperCase();                    //stores text value from input field
+    for (var i = 0; i <= studentLi.length; i ++){                      // loop through student list
+        let studentName = studentLi[i].getElementsByTagName('h3')[0];             // should target each list item and their h3 tag with name
+        if (studentName.textContent.toUpperCase().indexOf(searchText) > -1){     // tests input against index of names
+            studentLi[i].style.display = '';
         }else{
             studentLi[i].style.display = 'none'
 
