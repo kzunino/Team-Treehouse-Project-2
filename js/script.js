@@ -3,9 +3,10 @@ Treehouse Techdegree:
 FSJS project 2 - List Filter and Pagination
 ******************************************/
 
+
 const pageDiv = document.querySelector('.page'); // stores the div with class value page into a variable
 const ul = document.querySelector('.student-list'); //stores ul with student-list class
-const studentList = ul.children; //stores student list items as array
+const studentList = ul.querySelectorAll('li.student-item');
 const pages = Math.ceil(studentList.length/10); // divides index by page numbers and rounds up to fit values on the last page.
 
 
@@ -24,15 +25,14 @@ searchDiv.appendChild(button);
 
 
 searchInput.addEventListener('keyup', (e) => {
-  const studentLi = ul.querySelectorAll('li.student-item');
   const searchText = searchInput.value.toUpperCase();                    //stores text value from input field
-    for (var i = 0; i <= studentLi.length; i ++){                      // loop through student list
-        let studentName = studentLi[i].getElementsByTagName('h3')[0];             // should target each list item and their h3 tag with name
+    for (var i = 0; i <= studentList.length; i ++){                      // loop through student list
+        let studentName = studentList[i].getElementsByTagName('h3')[0];             // should target each list item and their h3 tag with name
         if (studentName.textContent.toUpperCase().indexOf(searchText) > -1){     // tests input against index of names
-            studentLi[i].style.display = '';
+            studentList[i].style.display = '';
+            showPage(studentList[i])
         }else{
-            studentLi[i].style.display = 'none'
-
+            studentList[i].style.display = 'none'
 }
 }
 });
