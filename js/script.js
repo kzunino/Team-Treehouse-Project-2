@@ -9,6 +9,16 @@ const ul = document.querySelector('.student-list'); //stores ul with student-lis
 const studentList = ul.querySelectorAll('li.student-item');
 const pages = Math.ceil(studentList.length/10); // divides index by page numbers and rounds up to fit values on the last page.
 
+const notFoundLi = document.createElement('li');
+ul.appendChild(notFoundLi);
+const notFoundDiv = document.createElement('div');
+notFoundLi.appendChild(notFoundDiv);
+const notFoundText = document.createElement('h3');
+notFoundDiv.appendChild(notFoundText);
+notFoundText.textContent = "No students with that name. Please try again";
+notFoundLi.style.display = 'none';
+
+
 
 const pageHeader = document.querySelector('.page-header'); //selects page header div *Note: leave off whitespace and cf from class tag.
 const searchDiv = document.createElement('div');
@@ -28,11 +38,12 @@ searchInput.addEventListener('keyup', (e) => {
   const searchText = searchInput.value.toUpperCase();                    //stores text value from input field
     for (var i = 0; i < studentList.length; i ++){                      // loop through student list
         let studentName = studentList[i].getElementsByTagName('h3')[0];             // should target each list item and their h3 tag with name
-        if (studentName.textContent.toUpperCase().indexOf(searchText) > -1){     // tests input against index of names
+        if (studentName.textContent.toUpperCase().indexOf(searchText) > -1){     // tests input against index value of names
             studentList[i].style.display = '';
-        }else{
-            studentList[i].style.display = 'none'
-}
+        }else if (studentName.textContent.toUpperCase().indexOf(searchText) < studentList.length){  //if name doesn't match, list index value is -1
+            studentList[i].style.display = 'none';
+        }else if (searchText !== studentName.textContent.toUpperCase()) {
+            notFoundLi.style.display = '';
 }
 }
 });
@@ -46,8 +57,9 @@ button.addEventListener('click', (e) =>{
           let studentName = studentList[i].getElementsByTagName('h3')[0];             // should target each list item and their h3 tag with name
           if (studentName.textContent.toUpperCase().indexOf(searchText) > -1){     // tests input against index of names
               studentList[i].style.display = '';
-          }else{
-              studentList[i].style.display = 'none'
+          }else if (studentName.textContent.toUpperCase().indexOf(searchText) < studentList.length){  //if name doesn't match, list index value is -1
+              studentList[i].style.display = 'none';
+
 }
   }
 }
