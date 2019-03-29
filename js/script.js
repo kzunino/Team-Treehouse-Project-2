@@ -3,11 +3,14 @@ Treehouse Techdegree:
 FSJS project 2 - List Filter and Pagination
 ******************************************/
 
+//global variables
 
 const pageDiv = document.querySelector('.page'); // stores the div with class value page into a variable
 const ul = document.querySelector('.student-list'); //stores ul with student-list class
-const studentList = ul.querySelectorAll('li.student-item');
+let studentList = ul.querySelectorAll('li.student-item');
 const pages = Math.ceil(studentList.length/10); // divides index by page numbers and rounds up to fit values on the last page.
+
+// New hidden div for the not found message
 
 const notFoundLi = document.createElement('li');
 ul.appendChild(notFoundLi);
@@ -18,7 +21,7 @@ notFoundDiv.appendChild(notFoundText);
 notFoundText.textContent = "No students with that name. Please try again";
 notFoundLi.style.display = 'none';
 
-
+// Extra credit search bar (global variables)
 
 const pageHeader = document.querySelector('.page-header'); //selects page header div *Note: leave off whitespace and cf from class tag.
 const searchDiv = document.createElement('div');
@@ -91,6 +94,9 @@ const showPage = (studentList, page) => {
 showPage(studentList, 1); //shows first page of student list when page is first opened
 
 const appendPageLinks = (StudentList) => {
+
+  // const restartFunction = document.removeElement(newDiv);
+  // restartFunction;   //in theory everytime this is called it will refresh div and pagination.
 
   const newDiv = document.createElement('div');  //creates new div
   pageDiv.appendChild(newDiv);  //appends paginationDiv to div.page
