@@ -12,7 +12,7 @@ const pages = Math.ceil(studentList.length/10); // divides index by page numbers
 
 const pageHeader = document.querySelector('.page-header'); //selects page header div *Note: leave off whitespace and cf from class tag.
 const searchDiv = document.createElement('div');
-searchDiv.className = 'search-student';
+searchDiv.className = 'student-search';
 pageHeader.appendChild(searchDiv);
 const searchInput = document.createElement('input');
 searchInput.placeholder = 'Search for students';
@@ -26,7 +26,7 @@ searchDiv.appendChild(button);
 
 searchInput.addEventListener('keyup', (e) => {
   const searchText = searchInput.value.toUpperCase();                    //stores text value from input field
-    for (var i = 0; i <= studentList.length; i ++){                      // loop through student list
+    for (var i = 0; i < studentList.length; i ++){                      // loop through student list
         let studentName = studentList[i].getElementsByTagName('h3')[0];             // should target each list item and their h3 tag with name
         if (studentName.textContent.toUpperCase().indexOf(searchText) > -1){     // tests input against index of names
             studentList[i].style.display = '';
@@ -34,13 +34,15 @@ searchInput.addEventListener('keyup', (e) => {
             studentList[i].style.display = 'none'
 }
 }
+}
 });
 
 button.addEventListener('click', (e) =>{
-  e.preventDefault();                                         //stops page from refreshing
+  e.preventDefault();                                          //stops page from refreshing
   if (e.target.tagName === 'BUTTON') {
       const searchText = searchInput.value.toUpperCase();
-      for (var i = 0; i <= studentList.length; i ++){                      // loop through student list
+      searchInput.value = '';                                             //clears input field after click
+      for (var i = 0; i < studentList.length; i ++){                      // loop through student list
           let studentName = studentList[i].getElementsByTagName('h3')[0];             // should target each list item and their h3 tag with name
           if (studentName.textContent.toUpperCase().indexOf(searchText) > -1){     // tests input against index of names
               studentList[i].style.display = '';
@@ -74,7 +76,7 @@ const showPage = (studentList, page) => {
     }
     }
 };
-showPage(studentList, 1);
+showPage(studentList, 1); //shows first page of student list when page is first opened
 
 const appendPageLinks = (StudentList) => {
 
