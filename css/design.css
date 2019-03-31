@@ -22,6 +22,12 @@ body{
     font-weight: bold;
     color: #555;
   }
+  .notFound{
+    margin-left: 300px;
+    font-size: 14px;
+    font-weight: bold;
+    color: black;
+  }
 
   .page-header .student-search{
     float: right;
