@@ -49,10 +49,8 @@ const showPage = (studentList, page) => {
 };
 showPage(studentList, 1); //shows first page of student list when page is first opened
 
-const appendPageLinks = (StudentList) => {
 
-  //const restartFunction = document.removeElement(newDiv);
-  // restartFunction;   //in theory everytime this is called it will refresh div and pagination.
+const appendPageLinks = (StudentList) => {
 
   const newDiv = document.createElement('div');  //creates new div
   pageDiv.appendChild(newDiv);  //appends paginationDiv to div.page
@@ -87,9 +85,24 @@ appendPageLinks(studentList);
 
 // ****** EXTRA CREDIT *********
 
+// const resultPages = Math.ceil(searchCount/10);
+//
+// const showResultPage = (searchCount, page) => {
+//   let lastListItem = (page * 10) - 1;         //stores the last item's index value
+//   let firstListItem = (lastListItem - 9);     //stores the first item's index value
+//   for (var i = 0; i < searchCount ; i += 1) {    //itterates through the student list
+//     if (i >= firstListItem && i <= lastListItem){   //conditional statement to iterate through list segments (note to self don't use studentList[i]) and hide or display list items
+//       studentList[i].style.display = '';
+//     }else{
+//       studentList[i].style.display = 'none'; //hides list items
+//     }
+//   }
+// };
+
 searchInput.addEventListener('keyup', (e) => {
   const searchText = searchInput.value.toUpperCase();   //stores text value from input field
   let searchCount = 0;                                  //counts results from loop
+  const resultPages = Math.ceil(searchCount/10);
     for (var i = 0; i < studentList.length; i ++){                      // loop through student list
         let studentName = studentList[i].getElementsByTagName('h3')[0];             // should target each list item and their h3 tag with name
         if (studentName.textContent.toUpperCase().indexOf(searchText) > -1){     // tests input against index value of names
@@ -111,10 +124,9 @@ searchInput.addEventListener('keyup', (e) => {
 
 
 button.addEventListener('click', (e) =>{
-  //e.preventDefault();                                          //stops page from refreshing
   if (e.target.tagName === 'BUTTON') {
       const searchText = searchInput.value.toUpperCase();
-      //searchInput.value = '';                                             //clears input field after click
+      searchInput.value = '';                                             //clears input field after click
       let searchCount = 0;                                  //counts results from loop
       for (var i = 0; i < studentList.length; i ++){                      // loop through student list
           let studentName = studentList[i].getElementsByTagName('h3')[0];             // should target each list item and their h3 tag with name
