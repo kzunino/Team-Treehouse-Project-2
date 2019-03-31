@@ -36,51 +36,6 @@ button.type = 'search';
 searchDiv.appendChild(button);
 
 
-searchInput.addEventListener('keyup', (e) => {
-  const searchText = searchInput.value.toUpperCase();   //stores text value from input field
-  let searchCount = 0;                                  //counts results from loop
-    for (var i = 0; i < studentList.length; i ++){                      // loop through student list
-        let studentName = studentList[i].getElementsByTagName('h3')[0];             // should target each list item and their h3 tag with name
-        if (studentName.textContent.toUpperCase().indexOf(searchText) > -1){     // tests input against index value of names
-            studentList[i].style.display = '';
-            searchCount ++;                                                   //for every match it adds to search count variable
-        }else if (studentName.textContent.toUpperCase().indexOf(searchText) < studentList.length){  //if name doesn't match, list index value is -1
-            studentList[i].style.display = 'none';
-}
-}
-  if (searchCount === 0){   //if the search count is === to 0 then notFoundDiv appears.
-    notFoundDiv.style.display = '';
-  }else{
-    notFoundDiv.style.display = 'none';
-}
-});
-
-button.addEventListener('click', (e) =>{
-  e.preventDefault();                                          //stops page from refreshing
-  if (e.target.tagName === 'BUTTON') {
-      const searchText = searchInput.value.toUpperCase();
-      searchInput.value = '';                                             //clears input field after click
-      for (var i = 0; i < studentList.length; i ++){                      // loop through student list
-          let studentName = studentList[i].getElementsByTagName('h3')[0];             // should target each list item and their h3 tag with name
-          if (studentName.textContent.toUpperCase().indexOf(searchText) > -1){     // tests input against index of names
-              studentList[i].style.display = '';
-          }else if (studentName.textContent.toUpperCase().indexOf(searchText) < studentList.length){  //if name doesn't match, list index value is -1
-              studentList[i].style.display = 'none';
-}
-}
-}
-});
-
-// And then here's one option for getting the "No results" message to show and hide as needed.
-// Inside the search logic, you could create a variable called resultCount or something like that.
-//  Set it initially to zero.
-// And then for every match, you add 1 to that variable.
-// And then after the loop that does all the searching and comparing,
-//  you could use another conditional to check if the resultCount variable is equal to zero,
-//  and if so, show the "No results" message.
-//  And I'll let you figure out how to hide it again before a new search happens and/or when the search field is emptied.
-
-
 const showPage = (studentList, page) => {
   let lastListItem = (page * 10) - 1;         //stores the last item's index value
   let firstListItem = (lastListItem - 9);     //stores the first item's index value
@@ -90,13 +45,13 @@ const showPage = (studentList, page) => {
     }else{
       studentList[i].style.display = 'none'; //hides list items
     }
-    }
+  }
 };
 showPage(studentList, 1); //shows first page of student list when page is first opened
 
 const appendPageLinks = (StudentList) => {
 
-  // const restartFunction = document.removeElement(newDiv);
+  //const restartFunction = document.removeElement(newDiv);
   // restartFunction;   //in theory everytime this is called it will refresh div and pagination.
 
   const newDiv = document.createElement('div');  //creates new div
@@ -123,8 +78,60 @@ const appendPageLinks = (StudentList) => {
             aTagList[i].classList.remove('active');
           }
         event.target.className = 'active';
-        }
+          }
         });
 };
 
 appendPageLinks(studentList);
+
+
+// ****** EXTRA CREDIT *********
+
+searchInput.addEventListener('keyup', (e) => {
+  const searchText = searchInput.value.toUpperCase();   //stores text value from input field
+  let searchCount = 0;                                  //counts results from loop
+    for (var i = 0; i < studentList.length; i ++){                      // loop through student list
+        let studentName = studentList[i].getElementsByTagName('h3')[0];             // should target each list item and their h3 tag with name
+        if (studentName.textContent.toUpperCase().indexOf(searchText) > -1){     // tests input against index value of names
+            studentList[i].style.display = '';
+            searchCount ++;                                                   //for every match it adds to search count variable
+        }else if (studentName.textContent.toUpperCase().indexOf(searchText) < studentList.length){  //if name doesn't match, list index value is -1
+            studentList[i].style.display = 'none';
+          }
+        }
+  if (searchCount === 0){   //if the search count is === to 0 then notFoundDiv appears.
+    notFoundDiv.style.display = '';
+  }else{
+    notFoundDiv.style.display = 'none';
+  }
+  if (searchText.length === 0){ // if search goes back to blank recalls showPage fucntion to reset original pagination.
+    showPage(studentList, 1);
+  }
+});
+
+
+button.addEventListener('click', (e) =>{
+  //e.preventDefault();                                          //stops page from refreshing
+  if (e.target.tagName === 'BUTTON') {
+      const searchText = searchInput.value.toUpperCase();
+      //searchInput.value = '';                                             //clears input field after click
+      let searchCount = 0;                                  //counts results from loop
+      for (var i = 0; i < studentList.length; i ++){                      // loop through student list
+          let studentName = studentList[i].getElementsByTagName('h3')[0];             // should target each list item and their h3 tag with name
+          if (studentName.textContent.toUpperCase().indexOf(searchText) > -1){     // tests input against index of names
+              studentList[i].style.display = '';
+              searchCount ++;                                                   //for every match it adds to search count variable
+          }else if (studentName.textContent.toUpperCase().indexOf(searchText) < studentList.length){  //if name doesn't match, list index value is -1
+              studentList[i].style.display = 'none';
+            }
+      if (searchCount === 0){   //if the search count is === to 0 then notFoundDiv appears.
+        notFoundDiv.style.display = '';
+      }else{
+        notFoundDiv.style.display = 'none';
+      }
+    }
+    if (searchText.length === 0){ // if search goes back to blank recalls showPage fucntion to reset original pagination.
+      showPage(studentList, 1);
+    }
+  }
+});
