@@ -102,12 +102,14 @@ appendPageLinks(studentList);
 searchInput.addEventListener('keyup', (e) => {
   const searchText = searchInput.value.toUpperCase();   //stores text value from input field
   let searchCount = 0;                                  //counts results from loop
+  let resultList = [];
   const resultPages = Math.ceil(searchCount/10);
     for (var i = 0; i < studentList.length; i ++){                      // loop through student list
         let studentName = studentList[i].getElementsByTagName('h3')[0];             // should target each list item and their h3 tag with name
         if (studentName.textContent.toUpperCase().indexOf(searchText) > -1){     // tests input against index value of names
             studentList[i].style.display = '';
             searchCount ++;                                                   //for every match it adds to search count variable
+            resultList.push(studentList);
         }else if (studentName.textContent.toUpperCase().indexOf(searchText) < studentList.length){  //if name doesn't match, list index value is -1
             studentList[i].style.display = 'none';
           }
