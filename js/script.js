@@ -52,6 +52,7 @@ showPage(studentList, 1); //shows first page of student list when page is first 
 
 const appendPageLinks = (StudentList) => {
 
+  const removeNewDiv = document.removeChild
   const newDiv = document.createElement('div');  //creates new div
   pageDiv.appendChild(newDiv);  //appends paginationDiv to div.page
   newDiv.className += 'pagination';  // assigns class name pagination to div
@@ -103,13 +104,12 @@ searchInput.addEventListener('keyup', (e) => {
   const searchText = searchInput.value.toUpperCase();   //stores text value from input field
   let searchCount = 0;                                  //counts results from loop
   let resultList = [];
-  const resultPages = Math.ceil(searchCount/10);
     for (var i = 0; i < studentList.length; i ++){                      // loop through student list
         let studentName = studentList[i].getElementsByTagName('h3')[0];             // should target each list item and their h3 tag with name
         if (studentName.textContent.toUpperCase().indexOf(searchText) > -1){     // tests input against index value of names
             studentList[i].style.display = '';
             searchCount ++;                                                   //for every match it adds to search count variable
-            resultList.push(studentList);
+            resultList.push(studentList[i]);
         }else if (studentName.textContent.toUpperCase().indexOf(searchText) < studentList.length){  //if name doesn't match, list index value is -1
             studentList[i].style.display = 'none';
           }
@@ -117,7 +117,7 @@ searchInput.addEventListener('keyup', (e) => {
   if (searchCount === 0){   //if the search count is === to 0 then notFoundDiv appears.
     notFoundDiv.style.display = '';
   }else{
-    notFoundDiv.style.display = 'none';
+    notFoundDiv.style.display = 'none';  //if it's not === 0 then it dissappears.
   }
   if (searchText.length === 0){ // if search goes back to blank recalls showPage fucntion to reset original pagination.
     showPage(studentList, 1);
