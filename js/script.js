@@ -51,9 +51,13 @@ showPage(studentList, 1); //shows first page of student list when page is first 
 
 
 const appendPageLinks = (StudentList) => {
-
-  const removeNewDiv = document.removeChild
   const newDiv = document.createElement('div');  //creates new div
+
+  if (newDiv.pagination){
+    pageDiv.removeChild(newDiv.pagination)
+  }
+
+  newDiv  //creates new div
   pageDiv.appendChild(newDiv);  //appends paginationDiv to div.page
   newDiv.className += 'pagination';  // assigns class name pagination to div
   const newUl = document.createElement('ul'); // creates ul for page links
@@ -113,7 +117,6 @@ searchInput.addEventListener('keyup', (e) => {
         }else if (studentName.textContent.toUpperCase().indexOf(searchText) < studentList.length){  //if name doesn't match, list index value is -1
             studentList[i].style.display = 'none';
           }
-          console.log(resultList.length);
         }
   if (searchCount === 0){   //if the search count is === to 0 then notFoundDiv appears.
     notFoundDiv.style.display = '';
