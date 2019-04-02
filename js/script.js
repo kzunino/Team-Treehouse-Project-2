@@ -10,6 +10,10 @@ const ul = document.querySelector('.student-list'); //stores ul with student-lis
 const pageHeader = document.querySelector('.page-header'); //selects page header div *Note: leave off whitespace and cf from class tag.
 let studentList = ul.querySelectorAll('li.student-item');
 const pages = Math.ceil(studentList.length/10); // divides index by page numbers and rounds up to fit values on the last page.
+let resultList = [];
+let searchCount = '';                                  //emptry searchCount Variable
+
+
 
 // New hidden div for the not found message
 
@@ -50,14 +54,12 @@ const showPage = (studentList, page) => {
 showPage(studentList, 1); //shows first page of student list when page is first opened
 
 
-const appendPageLinks = (StudentList) => {
-  const newDiv = document.createElement('div');  //creates new div
-
-  if (newDiv.pagination){
-    pageDiv.removeChild(newDiv.pagination)
+const appendPageLinks = (pages, studentList) => {
+  if (document.contains(document.querySelector('.pagination'))) { // if statement checks to see if newDiv exists and deletes it.
+    document.querySelector('.pagination').remove();               // this stops duplicate paginations links. Source: https://stackoverflow.com/questions/21591235/jscript-check-if-element-exists-and-remove-it
   }
 
-  newDiv  //creates new div
+  const newDiv = document.createElement('div');  //creates new div
   pageDiv.appendChild(newDiv);  //appends paginationDiv to div.page
   newDiv.className += 'pagination';  // assigns class name pagination to div
   const newUl = document.createElement('ul'); // creates ul for page links
@@ -85,37 +87,22 @@ const appendPageLinks = (StudentList) => {
         });
 };
 
-appendPageLinks(studentList);
+appendPageLinks(pages, studentList);
 
 
 // ****** EXTRA CREDIT *********
 
-// const resultPages = Math.ceil(searchCount/10);
-//
-// const showResultPage = (searchCount, page) => {
-//   let lastListItem = (page * 10) - 1;         //stores the last item's index value
-//   let firstListItem = (lastListItem - 9);     //stores the first item's index value
-//   for (var i = 0; i < searchCount ; i += 1) {    //itterates through the student list
-//     if (i >= firstListItem && i <= lastListItem){   //conditional statement to iterate through list segments (note to self don't use studentList[i]) and hide or display list items
-//       studentList[i].style.display = '';
-//     }else{
-//       studentList[i].style.display = 'none'; //hides list items
-//     }
-//   }
-// };
 
 searchInput.addEventListener('keyup', (e) => {
   const searchText = searchInput.value.toUpperCase();   //stores text value from input field
-  let resultList = [];
-  let searchCount = 0;                                  //counts results from loop
+  resultList = [];                                    // stores results in empty array
+  searchCount = 0;                                  //counts results from loop
     for (var i = 0; i < studentList.length; i ++){                      // loop through student list
+        studentList[i].style.display = 'none';
         let studentName = studentList[i].getElementsByTagName('h3')[0];             // should target each list item and their h3 tag with name
         if (studentName.textContent.toUpperCase().indexOf(searchText) > -1){     // tests input against index value of names
-            studentList[i].style.display = '';
             searchCount ++;                                                   //for every match it adds to search count variable
             resultList.push(studentList[i]);
-        }else if (studentName.textContent.toUpperCase().indexOf(searchText) < studentList.length){  //if name doesn't match, list index value is -1
-            studentList[i].style.display = 'none';
           }
         }
   if (searchCount === 0){   //if the search count is === to 0 then notFoundDiv appears.
@@ -123,6 +110,11 @@ searchInput.addEventListener('keyup', (e) => {
   }else{
     notFoundDiv.style.display = 'none';  //if it's not === 0 then it dissappears.
   }
+  const resultPages = Math.ceil(resultList.length/10); // changes page numbers based on results.
+  showPage(resultList, resultPages);        //inserts search result array and new page arguments
+  appendPageLinks(resultPages, resultList);
+  showPage(resultList, 1);                  //makes it so it shows page one of new results list.
+
   if (searchText.length === 0){ // if search goes back to blank recalls showPage fucntion to reset original pagination.
     showPage(studentList, 1);
   }
