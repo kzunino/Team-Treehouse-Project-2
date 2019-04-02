@@ -14,32 +14,33 @@ let resultList = [];
 let searchCount = '';                                    //emptry searchCount Variable
 
 
-const createElement = (elementName, setClass, domNode, property) => {  //refactored code for DRY
+// ******** Function for creating, modifying, and appending elements for DRY ****************
+
+const createElement = (elementName, setClass, domNode, value, text) => {  //refactored code for DRY
   const element = document.createElement(elementName);      //creates new DOM elements
   element.className += setClass;                            //gives dom elements new class names
   domNode.appendChild(element);                             // appends new elemement to DOM
-  element.type = property;
+  element.type = value;                                     // sets element type
+  element.textContent = text;                               //sets element text content
   return element;
 };
 
 
 // New hidden div for the not found message
 
-const notFoundDiv = createElement('div', 'notFound', pageHeader, undefined);
-const notFoundText = createElement('h1', undefined, notFoundDiv, undefined);
-notFoundText.textContent = "No students with that name. Please try again.";
+const notFoundDiv = createElement('div', 'notFound', pageHeader, undefined, undefined);
+const notFoundText = createElement('h1', undefined, notFoundDiv, undefined, 'No students with that name. Please try again.');
 notFoundDiv.style.display = 'none';
 
-// Extra credit search bar (global variables)
+// *********  Extra credit search bar (global variables) ***************
 
-const searchDiv = createElement('div', 'student-search', pageHeader, undefined);
-const searchInput = createElement('input', undefined, searchDiv, 'text');
+const searchDiv = createElement('div', 'student-search', pageHeader, undefined, undefined);
+const searchInput = createElement('input', undefined, searchDiv, 'text', undefined);
 searchInput.placeholder = 'Search for students';
-searchInput.type = 'text';
-const button = createElement('button', undefined, searchDiv, 'search');
-button.textContent = 'Search';
-button.type = 'search';
+const button = createElement('button', undefined, searchDiv, undefined, 'Search');
 
+
+// ********** showPage Function *********
 
 const showPage = (studentList, page) => {
   let lastListItem = (page * 10) - 1;                    //stores the last item's index value
@@ -60,21 +61,14 @@ const appendPageLinks = (pages, studentList) => {
     document.querySelector('.pagination').remove();               // this stops duplicate paginations links. Source: https://stackoverflow.com/questions/21591235/jscript-check-if-element-exists-and-remove-it
   };
 
-  // const createElement = (elementName, setClass, domNode) => { //refactored code for DRY
-  //   const element = document.createElement(elementName);      //creates new DOM elements
-  //   element.className += setClass;                            //gives dom elements new class names
-  //   domNode.appendChild(element);                             // appends new elemement to DOM
-  //   return element;
-  // };
-
-  const newDiv = createElement('div', 'pagination', pageDiv, undefined);  //calls function to create newDiv, class, and appends it.
-  const newUl = createElement('ul', 'pages', newDiv, undefined);
+  const newDiv = createElement('div', 'pagination', pageDiv, undefined, undefined);  //calls function to create newDiv, class, and appends it.
+  const newUl = createElement('ul', 'pages', newDiv, undefined, undefined);
 
   const selectNewUl = document.querySelector('.pages')
 
       for (var i = 1; i <= pages; i+= 1){
-        const newLi = createElement('li', undefined, newUl, undefined);   //creates a list item in pageLinks and appends to newUL. (undefined skips middle parameter source:https://stackoverflow.com/questions/8356227/skipping-optional-function-parameters-in-javascript)
-        const aTag = createElement('a', undefined, newLi, undefined);    // creates a tags and appends to newLI
+        const newLi = createElement('li', undefined, newUl, undefined, undefined);   //creates a list item in pageLinks and appends to newUL. (undefined skips middle parameter source:https://stackoverflow.com/questions/8356227/skipping-optional-function-parameters-in-javascript)
+        const aTag = createElement('a', undefined, newLi, undefined, undefined);    // creates a tags and appends to newLI
         aTag.setAttribute('href','#');                        //sets attribute for href link
         aTag.textContent = i;                                 //changes page numbers per each itteration
       }
@@ -98,9 +92,8 @@ appendPageLinks(pages, studentList);
 
 // ****** EXTRA CREDIT *********
 
-
-searchInput.addEventListener('keyup', (e) => {
-  const searchText = searchInput.value.toUpperCase();   //stores text value from input field
+const searchFunctionality = () => {                     //This function works for both search listeners. DRY principles at work
+  const searchText = searchInput.value.toUpperCase();
   resultList = [];                                    // stores results in empty array
   searchCount = 0;                                  //counts results from loop
     for (var i = 0; i < studentList.length; i ++){                      // loop through student list
@@ -124,34 +117,16 @@ searchInput.addEventListener('keyup', (e) => {
   if (searchText.length === 0){ // if search goes back to blank recalls showPage fucntion to reset original pagination.
     showPage(studentList, 1);
   }
+};
+
+
+searchInput.addEventListener('keyup', (e) => {      //Search Input listener
+  searchFunctionality();                            //calls function to execute search
 });
 
 
-button.addEventListener('click', (e) =>{
+button.addEventListener('click', (e) =>{           //Search Button listener
   if (e.target.tagName === 'BUTTON') {
-      const searchText = searchInput.value.toUpperCase();
-      resultList = [];                                    // stores results in empty array
-      searchCount = 0;                                  //counts results from loop
-        for (var i = 0; i < studentList.length; i ++){                      // loop through student list
-            studentList[i].style.display = 'none';
-            let studentName = studentList[i].getElementsByTagName('h3')[0];             // should target each list item and their h3 tag with name
-            if (studentName.textContent.toUpperCase().indexOf(searchText) > -1){     // tests input against index value of names
-                searchCount ++;                                                   //for every match it adds to search count variable
-                resultList.push(studentList[i]);
-              }
-            }
-      if (searchCount === 0){   //if the search count is === to 0 then notFoundDiv appears.
-        notFoundDiv.style.display = '';
-      }else{
-        notFoundDiv.style.display = 'none';  //if it's not === 0 then it dissappears.
-      }
-      const resultPages = Math.ceil(resultList.length/10); // changes page numbers based on results.
-      showPage(resultList, resultPages);        //inserts resultList collection as an array and resultPage as arguments
-      appendPageLinks(resultPages, resultList); //calls appendPageLinks function with new arguments.
-      showPage(resultList, 1);                  //recall makes it so it shows page one of new results list.
-
-      if (searchText.length === 0){ // if search goes back to blank recalls showPage fucntion to reset original pagination.
-        showPage(studentList, 1);
-      }
+    searchFunctionality();                        //calls for search functionality
     }
     });
