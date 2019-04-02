@@ -75,16 +75,20 @@ const appendPageLinks = (pages, studentList) => {
         aTag.setAttribute('href','#'); //sets attribute for href link
         aTag.textContent = i;   //changes page numbers per each itteration
       }
-      selectNewUl.addEventListener('click', (e) => {    //uses bubbling to target ancestor ul of a tags.
-        const aTagList = document.querySelectorAll('a');
-        if (event.target.tagName === 'A'){
-          showPage(studentList, event.target.textContent); //calls function with aTag's text content, which is a corresponding page number;
-          for (var i = 0; i < aTagList.length; i += 1){
-            aTagList[i].classList.remove('active');
-          }
-        event.target.className = 'active';
-          }
-        });
+  const aTagList = document.querySelectorAll('a');
+  // aTagList[0].className = 'active';                 //adds active class to first as default
+  selectNewUl.addEventListener('click', (e) => {    //uses bubbling to target ancestor ul of a tags.
+    if (event.target.tagName === 'A'){
+      showPage(studentList, event.target.textContent); //calls function with aTag's text content, which is a corresponding page number;
+      for (var i = 0; i < aTagList.length; i += 1){
+        aTagList[i].classList.remove('active');
+      }
+    event.target.className = 'active';
+      }
+    });
+    if (document.contains(document.querySelector('a'))) { // if statement checks to see if a tag exists.
+      aTagList[0].className = 'active';                 //adds active class to first as default, if exists. Wont throw error with conditional, if no a tags exist when no search results exist.
+    }
 };
 
 appendPageLinks(pages, studentList);
@@ -111,9 +115,9 @@ searchInput.addEventListener('keyup', (e) => {
     notFoundDiv.style.display = 'none';  //if it's not === 0 then it dissappears.
   }
   const resultPages = Math.ceil(resultList.length/10); // changes page numbers based on results.
-  showPage(resultList, resultPages);        //inserts search result array and new page arguments
-  appendPageLinks(resultPages, resultList);
-  showPage(resultList, 1);                  //makes it so it shows page one of new results list.
+  showPage(resultList, resultPages);        //inserts resultList collection as an array and resultPage as arguments
+  appendPageLinks(resultPages, resultList); //calls appendPageLinks function with new arguments.
+  showPage(resultList, 1);                  //recall makes it so it shows page one of new results list.
 
   if (searchText.length === 0){ // if search goes back to blank recalls showPage fucntion to reset original pagination.
     showPage(studentList, 1);
