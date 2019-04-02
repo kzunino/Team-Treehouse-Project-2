@@ -10,7 +10,7 @@ const ul = document.querySelector('.student-list');         //stores ul with stu
 const pageHeader = document.querySelector('.page-header'); //selects page header div *Note: leave off whitespace and cf from class tag.
 let studentList = ul.querySelectorAll('li.student-item');
 const pages = Math.ceil(studentList.length/10);           // divides index by page numbers and rounds up to fit values on the last page.
-let resultList = [];
+let resultList = [];                                      //declares and sets result array to empty
 let searchCount = '';                                    //emptry searchCount Variable
 
 
