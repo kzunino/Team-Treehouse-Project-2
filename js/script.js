@@ -14,30 +14,31 @@ let resultList = [];
 let searchCount = '';                                    //emptry searchCount Variable
 
 
+const createElement = (elementName, setClass, domNode, property) => {  //refactored code for DRY
+  const element = document.createElement(elementName);      //creates new DOM elements
+  element.className += setClass;                            //gives dom elements new class names
+  domNode.appendChild(element);                             // appends new elemement to DOM
+  element.type = property;
+  return element;
+};
+
 
 // New hidden div for the not found message
 
-const notFoundDiv = document.createElement('div');
-notFoundDiv.className = 'notFound';
-pageHeader.appendChild(notFoundDiv);
-const notFoundText = document.createElement('h1');
-notFoundDiv.appendChild(notFoundText);
+const notFoundDiv = createElement('div', 'notFound', pageHeader, undefined);
+const notFoundText = createElement('h1', undefined, notFoundDiv, undefined);
 notFoundText.textContent = "No students with that name. Please try again.";
 notFoundDiv.style.display = 'none';
 
 // Extra credit search bar (global variables)
 
-const searchDiv = document.createElement('div');
-searchDiv.className = 'student-search';
-pageHeader.appendChild(searchDiv);
-const searchInput = document.createElement('input');
+const searchDiv = createElement('div', 'student-search', pageHeader, undefined);
+const searchInput = createElement('input', undefined, searchDiv, 'text');
 searchInput.placeholder = 'Search for students';
 searchInput.type = 'text';
-searchDiv.appendChild(searchInput);
-const button = document.createElement('button');
+const button = createElement('button', undefined, searchDiv, 'search');
 button.textContent = 'Search';
 button.type = 'search';
-searchDiv.appendChild(button);
 
 
 const showPage = (studentList, page) => {
@@ -59,21 +60,21 @@ const appendPageLinks = (pages, studentList) => {
     document.querySelector('.pagination').remove();               // this stops duplicate paginations links. Source: https://stackoverflow.com/questions/21591235/jscript-check-if-element-exists-and-remove-it
   };
 
-  const createElement = (elementName, setClass, domNode) => { //refactored code for DRY
-    const element = document.createElement(elementName);      //creates new DOM elements
-    element.className += setClass;                            //gives dom elements new class names
-    domNode.appendChild(element);                             // appends new elemement to DOM
-    return element;
-  };
+  // const createElement = (elementName, setClass, domNode) => { //refactored code for DRY
+  //   const element = document.createElement(elementName);      //creates new DOM elements
+  //   element.className += setClass;                            //gives dom elements new class names
+  //   domNode.appendChild(element);                             // appends new elemement to DOM
+  //   return element;
+  // };
 
-  const newDiv = createElement('div', 'pagination', pageDiv);  //calls function to create newDiv, class, and appends it.
-  const newUl = createElement('ul', 'pages', newDiv);
+  const newDiv = createElement('div', 'pagination', pageDiv, undefined);  //calls function to create newDiv, class, and appends it.
+  const newUl = createElement('ul', 'pages', newDiv, undefined);
 
   const selectNewUl = document.querySelector('.pages')
 
       for (var i = 1; i <= pages; i+= 1){
-        const newLi = createElement('li', undefined, newUl);   //creates a list item in pageLinks and appends to newUL. (undefined skips middle parameter source:https://stackoverflow.com/questions/8356227/skipping-optional-function-parameters-in-javascript)
-        const aTag = createElement('a', undefined, newLi);    // creates a tags and appends to newLI
+        const newLi = createElement('li', undefined, newUl, undefined);   //creates a list item in pageLinks and appends to newUL. (undefined skips middle parameter source:https://stackoverflow.com/questions/8356227/skipping-optional-function-parameters-in-javascript)
+        const aTag = createElement('a', undefined, newLi, undefined);    // creates a tags and appends to newLI
         aTag.setAttribute('href','#');                        //sets attribute for href link
         aTag.textContent = i;                                 //changes page numbers per each itteration
       }
