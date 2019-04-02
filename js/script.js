@@ -68,11 +68,7 @@ const appendPageLinks = (pages, studentList) => {
   };
 
   const newDiv = createElement('div', 'pagination', pageDiv);  //creates new div
-  // pageDiv.appendChild(newDiv);  //appends paginationDiv to div.page
-  // newDiv.className += 'pagination';  // assigns class name pagination to div
   const newUl = createElement('ul', 'pages', newDiv); // creates ul for page links
-  // newUl.className = 'pages';
-  // newDiv.appendChild(newUl); // appends the page links to paginationDiv
 
 
   // const newDiv = document.createElement('div');  //creates new div
