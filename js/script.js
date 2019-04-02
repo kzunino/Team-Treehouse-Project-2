@@ -59,15 +59,15 @@ const appendPageLinks = (pages, studentList) => {
     document.querySelector('.pagination').remove();               // this stops duplicate paginations links. Source: https://stackoverflow.com/questions/21591235/jscript-check-if-element-exists-and-remove-it
   };
 
-  const createElement = (elementName, setClass, domNode) => {
+  const createElement = (elementName, property, setClass, domNode) => {
     const element = document.createElement(elementName);
-    element.className += setClass;
+    element[property] += setClass;
     domNode.appendChild(element);
     return element;
 
   };
 
-  const newDiv = createElement('div', 'pagination', pageDiv);  //creates new div
+  const newDiv = createElement('div', 'className', 'pagination', pageDiv);  //creates new div
   // pageDiv.appendChild(newDiv);  //appends paginationDiv to div.page
   // newDiv.className += 'pagination';  // assigns class name pagination to div
   const newUl = createElement('ul', 'pages'); // creates ul for page links
