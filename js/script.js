@@ -57,14 +57,31 @@ showPage(studentList, 1); //shows first page of student list when page is first 
 const appendPageLinks = (pages, studentList) => {
   if (document.contains(document.querySelector('.pagination'))) { // if statement checks to see if newDiv exists and deletes it.
     document.querySelector('.pagination').remove();               // this stops duplicate paginations links. Source: https://stackoverflow.com/questions/21591235/jscript-check-if-element-exists-and-remove-it
-  }
+  };
 
-  const newDiv = document.createElement('div');  //creates new div
-  pageDiv.appendChild(newDiv);  //appends paginationDiv to div.page
-  newDiv.className += 'pagination';  // assigns class name pagination to div
-  const newUl = document.createElement('ul'); // creates ul for page links
+  const createElement = (elementName, setClass, domNode) => {
+    const element = document.createElement(elementName);
+    element.className += setClass;
+    domNode.appendChild(element);
+    return element;
+
+  };
+
+  const newDiv = createElement('div', 'pagination', pageDiv);  //creates new div
+  // pageDiv.appendChild(newDiv);  //appends paginationDiv to div.page
+  // newDiv.className += 'pagination';  // assigns class name pagination to div
+  const newUl = createElement('ul', 'pages'); // creates ul for page links
   newUl.className = 'pages';
   newDiv.appendChild(newUl); // appends the page links to paginationDiv
+
+
+  // const newDiv = document.createElement('div');  //creates new div
+  // pageDiv.appendChild(newDiv);  //appends paginationDiv to div.page
+  // newDiv.className += 'pagination';  // assigns class name pagination to div
+  // const newUl = document.createElement('ul'); // creates ul for page links
+  // newUl.className = 'pages';
+  // newDiv.appendChild(newUl); // appends the page links to paginationDiv
+
   const selectNewUl = document.querySelector('.pages')
 
       for (var i = 1; i <= pages; i+= 1){
@@ -128,24 +145,28 @@ searchInput.addEventListener('keyup', (e) => {
 button.addEventListener('click', (e) =>{
   if (e.target.tagName === 'BUTTON') {
       const searchText = searchInput.value.toUpperCase();
-      searchInput.value = '';                                             //clears input field after click
-      let searchCount = 0;                                  //counts results from loop
-      for (var i = 0; i < studentList.length; i ++){                      // loop through student list
-          let studentName = studentList[i].getElementsByTagName('h3')[0];             // should target each list item and their h3 tag with name
-          if (studentName.textContent.toUpperCase().indexOf(searchText) > -1){     // tests input against index of names
-              studentList[i].style.display = '';
-              searchCount ++;                                                   //for every match it adds to search count variable
-          }else if (studentName.textContent.toUpperCase().indexOf(searchText) < studentList.length){  //if name doesn't match, list index value is -1
-              studentList[i].style.display = 'none';
+      resultList = [];                                    // stores results in empty array
+      searchCount = 0;                                  //counts results from loop
+        for (var i = 0; i < studentList.length; i ++){                      // loop through student list
+            studentList[i].style.display = 'none';
+            let studentName = studentList[i].getElementsByTagName('h3')[0];             // should target each list item and their h3 tag with name
+            if (studentName.textContent.toUpperCase().indexOf(searchText) > -1){     // tests input against index value of names
+                searchCount ++;                                                   //for every match it adds to search count variable
+                resultList.push(studentList[i]);
+              }
             }
       if (searchCount === 0){   //if the search count is === to 0 then notFoundDiv appears.
         notFoundDiv.style.display = '';
       }else{
-        notFoundDiv.style.display = 'none';
+        notFoundDiv.style.display = 'none';  //if it's not === 0 then it dissappears.
+      }
+      const resultPages = Math.ceil(resultList.length/10); // changes page numbers based on results.
+      showPage(resultList, resultPages);        //inserts resultList collection as an array and resultPage as arguments
+      appendPageLinks(resultPages, resultList); //calls appendPageLinks function with new arguments.
+      showPage(resultList, 1);                  //recall makes it so it shows page one of new results list.
+
+      if (searchText.length === 0){ // if search goes back to blank recalls showPage fucntion to reset original pagination.
+        showPage(studentList, 1);
       }
     }
-    if (searchText.length === 0){ // if search goes back to blank recalls showPage fucntion to reset original pagination.
-      showPage(studentList, 1);
-    }
-  }
-});
+    });
